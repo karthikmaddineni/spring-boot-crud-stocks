@@ -7,7 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class StockAnalyticsApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(StockAnalyticsApplication.class, args);
+		System.out.println("Successfully runned the maven-project");
 	}
 
 }
