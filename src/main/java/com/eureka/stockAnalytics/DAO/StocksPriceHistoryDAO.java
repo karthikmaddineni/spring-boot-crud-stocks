@@ -1,6 +1,7 @@
 package com.eureka.stockAnalytics.DAO;
 
 import com.eureka.stockAnalytics.VO.PriceHistoryVO;
+import com.eureka.stockAnalytics.VO.SPHCustomRequestVO;
 import com.eureka.stockAnalytics.mappers.StockPriceHistoryRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,8 +14,10 @@ import java.util.List;
 
 @Component
 public class StocksPriceHistoryDAO {
+
     @Autowired
     JdbcTemplate jdbcTemplate;
+
     @Autowired
     NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     public List<PriceHistoryVO> getSpecificStockPriceHistory(String tickerSymbol, LocalDate fromDate, LocalDate toDate) {
