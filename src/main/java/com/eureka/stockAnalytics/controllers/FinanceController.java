@@ -1,9 +1,6 @@
 package com.eureka.stockAnalytics.controllers;
 
-import com.eureka.stockAnalytics.VO.PriceHistoryVO;
-import com.eureka.stockAnalytics.VO.SPHCustomRequestVO;
-import com.eureka.stockAnalytics.VO.SPHCustomResponseVO;
-import com.eureka.stockAnalytics.VO.StockFundamentalsWithNamesVO;
+import com.eureka.stockAnalytics.VO.*;
 import com.eureka.stockAnalytics.service.FinanceAnalylticService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -60,5 +58,20 @@ public class FinanceController {
     @GetMapping(value = "/getAllStockFundamentalsWithNames")
     public List<StockFundamentalsWithNamesVO> getAllStocksFundamentalsWithNames(){
         return financeAnalylticService.getAllStocksFundamentalsWithNames();
+    }
+        //    Assignment:
+        //            "Write a GET API to get Sector from database using JdbcTemple
+        //            /sectors
+        //sectors/{sector-id}
+        //"
+    @GetMapping(value = "/getAllSectorIDandNames")
+    public List<SectorVO> getAllSectorIDandNames(){
+        System.out.println("Hitted Controller");
+        return financeAnalylticService.getAllSectorIDandNames();
+    }
+    @GetMapping(value = "/getSectorNameWithSectorId")
+    public List<SectorVO> getSectorNameWithSectorId(@RequestParam(value = "sectorId") BigDecimal sectorId){
+        System.out.println("Hitted Controller");
+        return financeAnalylticService.getSectorNameWithSectorId(sectorId);
     }
 }

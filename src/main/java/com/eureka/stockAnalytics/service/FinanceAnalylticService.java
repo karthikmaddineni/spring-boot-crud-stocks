@@ -1,14 +1,13 @@
 package com.eureka.stockAnalytics.service;
 
+import com.eureka.stockAnalytics.DAO.SectorLookupDAO;
 import com.eureka.stockAnalytics.DAO.StockFundamentalsDAO;
 import com.eureka.stockAnalytics.DAO.StocksPriceHistoryDAO;
-import com.eureka.stockAnalytics.VO.PriceHistoryVO;
-import com.eureka.stockAnalytics.VO.SPHCustomRequestVO;
-import com.eureka.stockAnalytics.VO.SPHCustomResponseVO;
-import com.eureka.stockAnalytics.VO.StockFundamentalsWithNamesVO;
+import com.eureka.stockAnalytics.VO.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -16,13 +15,14 @@ import java.util.stream.Collectors;
 //here we get the data from DAO layer and we will perform business logic
 @Service
 public class FinanceAnalylticService {
-
+    private SectorLookupDAO sectorLookupDAO;
     private StockFundamentalsDAO stockFundamentalsDAO;
     private StocksPriceHistoryDAO stocksPriceHistoryDAO;
 
     @Autowired
-    public FinanceAnalylticService(StocksPriceHistoryDAO stocksPriceHistoryDAO){
+    public FinanceAnalylticService(StocksPriceHistoryDAO stocksPriceHistoryDAO,SectorLookupDAO sectorLookupDAO){
         this.stocksPriceHistoryDAO = stocksPriceHistoryDAO;
+        this.sectorLookupDAO = sectorLookupDAO;
     }
     public List<PriceHistoryVO> getSpecificStockPriceHistory(String tickerSymbol, LocalDate fromDate, LocalDate toDate) {
         return stocksPriceHistoryDAO.getSpecificStockPriceHistory(tickerSymbol, fromDate, toDate);
@@ -66,5 +66,13 @@ public class FinanceAnalylticService {
 
     public List<StockFundamentalsWithNamesVO> getAllStocksFundamentalsWithNames() {
         return stockFundamentalsDAO.getAllStocksFundamentalsWithNames();
+    }
+
+    public List<SectorVO> getAllSectorIDandNames(){
+        return sectorLookupDAO.getAllSectorIDandNames();
+    }
+    public List<SectorVO> getSectorNameWithSectorId(BigDecimal sectorId) {
+        System.out.println("Hitted Service Layer");
+        return sectorLookupDAO.getSectorNameWithSectorId(sectorId);
     }
 }
