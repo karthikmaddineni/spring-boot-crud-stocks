@@ -1,6 +1,8 @@
 package com.eureka.stockAnalytics.controllers;
 
 import com.eureka.stockAnalytics.VO.*;
+import com.eureka.stockAnalytics.entity.stocks.SectorLook;
+import com.eureka.stockAnalytics.entity.stocks.StockFundamentals;
 import com.eureka.stockAnalytics.service.FinanceAnalylticService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -74,4 +77,21 @@ public class FinanceController {
         System.out.println("Hitted Controller");
         return financeAnalylticService.getSectorNameWithSectorId(sectorId);
     }
+    @GetMapping(value = "/getAllSubSectors")
+    public Map<BigDecimal,List<SubSectorVO>> getAllSubSectors(){
+        return financeAnalylticService.getAllSubSectors();
+    }
+    @GetMapping(value = "/getAllStockFundamentalsJPA")
+    public List<StockFundamentals> getAllStockFundamentalsJPA(){
+        return financeAnalylticService.getAllStockFundamentalsJPA();
+    }
+    @GetMapping(value = "/getAllStockFundamentalsByIdJPA")
+    public Optional<StockFundamentals> getAllStockFundamentalsByIdJPA(@RequestParam(value = "tickerName") String ticker){
+        return financeAnalylticService.getAllStockFundamentalsByIdJPA(ticker);
+    }
+    @GetMapping(value = "/getAllSectorLookupByIdJPA")
+    public List<SectorLook> getAllSectorLookupByIdJPA(){
+        return financeAnalylticService.getAllSectorLookupByIdJPA();
+    }
+
 }

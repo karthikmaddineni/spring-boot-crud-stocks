@@ -3,7 +3,12 @@ package com.eureka.stockAnalytics.service;
 import com.eureka.stockAnalytics.DAO.SectorLookupDAO;
 import com.eureka.stockAnalytics.DAO.StockFundamentalsDAO;
 import com.eureka.stockAnalytics.DAO.StocksPriceHistoryDAO;
+import com.eureka.stockAnalytics.DAO.SubSectorDAO;
 import com.eureka.stockAnalytics.VO.*;
+import com.eureka.stockAnalytics.entity.stocks.SectorLook;
+import com.eureka.stockAnalytics.entity.stocks.StockFundamentals;
+import com.eureka.stockAnalytics.repository.stocks.SectorLookupRepository;
+import com.eureka.stockAnalytics.repository.stocks.StockFundamentalsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +23,21 @@ public class FinanceAnalylticService {
     private SectorLookupDAO sectorLookupDAO;
     private StockFundamentalsDAO stockFundamentalsDAO;
     private StocksPriceHistoryDAO stocksPriceHistoryDAO;
+    private SubSectorDAO subSectorDAO;
+    private StockFundamentalsRepository stockFundamentalsRepository;
+    private SectorLookupRepository sectorLookupRepository;
 
     @Autowired
-    public FinanceAnalylticService(StocksPriceHistoryDAO stocksPriceHistoryDAO,SectorLookupDAO sectorLookupDAO){
+    public FinanceAnalylticService(StocksPriceHistoryDAO stocksPriceHistoryDAO,
+                                   SectorLookupDAO sectorLookupDAO,
+                                   SubSectorDAO subSectorDAO,
+                                   StockFundamentalsRepository stockFundamentalsRepository,
+                                   SectorLookupRepository sectorLookupRepository){
         this.stocksPriceHistoryDAO = stocksPriceHistoryDAO;
         this.sectorLookupDAO = sectorLookupDAO;
+        this.subSectorDAO = subSectorDAO;
+        this.stockFundamentalsRepository = stockFundamentalsRepository;
+        this.sectorLookupRepository = sectorLookupRepository;
     }
     public List<PriceHistoryVO> getSpecificStockPriceHistory(String tickerSymbol, LocalDate fromDate, LocalDate toDate) {
         return stocksPriceHistoryDAO.getSpecificStockPriceHistory(tickerSymbol, fromDate, toDate);
@@ -74,5 +89,23 @@ public class FinanceAnalylticService {
     public List<SectorVO> getSectorNameWithSectorId(BigDecimal sectorId) {
         System.out.println("Hitted Service Layer");
         return sectorLookupDAO.getSectorNameWithSectorId(sectorId);
+    }
+
+    public Map<BigDecimal,List<SubSectorVO>> getAllSubSectors() {
+        List<SubSectorVO> subSectorObject = subSectorDAO.getAllSubSectors();
+        Map<BigDecimal,List<SubSectorVO>> newSubSectorObject = subSectorObject.stream()
+                .collect(Collectors.groupingBy(SubSectorVO::getSectorId));
+        return newSubSectorObject;
+    }
+
+    public List<StockFundamentals> getAllStockFundamentalsJPA() {
+        return stockFundamentalsRepository.findAll();
+    }
+    public Optional<StockFundamentals> getAllStockFundamentalsByIdJPA(String ticker) {
+        return stockFundamentalsRepository.findById(ticker);
+    }
+
+    public List<SectorLook> getAllSectorLookupByIdJPA() {
+        return sectorLookupRepository.findAll();
     }
 }
