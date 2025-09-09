@@ -16,13 +16,13 @@ public class DataBaseConfig {
     //this look fpr spring.datasource in the application props
 
     @Bean(name = "dataSource")
-    @Primary
     @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource getDataSource(){
         return DataSourceBuilder.create().build();
     }
     //this look fpr spring.datasource in the application props
     @Bean(name = "dataSourceCrud")
+    @Primary
     @ConfigurationProperties(prefix = "spring.datasource-crudjpa")
     public DataSource getDataSourceCrud(){
         return DataSourceBuilder.create().build();
