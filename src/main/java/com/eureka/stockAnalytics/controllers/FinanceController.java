@@ -108,6 +108,15 @@ public class FinanceController {
     public List<StockFundamentals> getAllSfJPA(){
         return financeAnalylticService.getAllSfJPA();
     }
-
+//assignment 1
+    @GetMapping(value = "/getSectorLookupById")
+    public Optional<Sector> getSectorLookupById(@RequestParam(value = "sectorId") Integer sectorId){
+        return financeAnalylticService.getSectorLookupById(sectorId);
+    }
+    //assignment 2
+    @GetMapping(value = "/getAllStocksBySectorID/{sectorID}")
+    public List<StockFundamentals> getAllStocksBySectorID(@PathVariable(value = "sectorID") Integer sectorId){
+        return financeAnalylticService.getAllStocksBySectorID(sectorId);
+    }
 
 }

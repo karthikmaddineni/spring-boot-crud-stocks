@@ -22,11 +22,29 @@ public class StockFundamentals {
     @ManyToOne
     @JoinColumn(name = "sector_id")
     private Sector sector;
+
     @ManyToOne
     @JoinColumn(name = "subsector_id")
     private SubSector subSector;
 
+    public Sector getSector() {
+        return sector;
+    }
+
+    public SubSector getSubSector() {
+        return subSector;
+    }
+
     public StockFundamentals() {
+    }
+
+    public StockFundamentals(String tickerSymbol, BigDecimal markerCap, BigDecimal currentRatio,
+                             Sector sector, SubSector subSector) {
+        this.tickerSymbol = tickerSymbol;
+        this.markerCap = markerCap;
+        this.currentRatio = currentRatio;
+        this.sector = sector;
+        this.subSector = subSector;
     }
 
     public StockFundamentals(String tickerSymbol, Integer sectorId, Integer subSectorId, BigDecimal markerCap, BigDecimal currentRatio) {
@@ -47,7 +65,9 @@ public class StockFundamentals {
                 ", currentRatio=" + currentRatio +
                 '}'+'\n';
     }
-
+    public Integer getSectorId(){
+        return sector.getSectorId();
+    }
     public String getTickerSymbol() {
         return tickerSymbol;
     }

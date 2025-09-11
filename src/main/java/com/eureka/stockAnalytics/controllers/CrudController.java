@@ -2,6 +2,7 @@ package com.eureka.stockAnalytics.controllers;
 
 import com.eureka.stockAnalytics.entity.crud.Address;
 import com.eureka.stockAnalytics.entity.crud.Person;
+import com.eureka.stockAnalytics.entity.stocks.Sector;
 import com.eureka.stockAnalytics.repository.crud.PersonRepo;
 import com.eureka.stockAnalytics.service.CrudService;
 import org.slf4j.Logger;
@@ -49,6 +50,9 @@ public class CrudController {
     public void deletePerson(@RequestBody Person person){
         crudService.deletePerson(person);
     }
+
+
+
 }
 
 

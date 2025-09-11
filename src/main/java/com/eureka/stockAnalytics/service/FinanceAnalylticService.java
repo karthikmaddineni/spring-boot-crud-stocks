@@ -125,4 +125,16 @@ public class FinanceAnalylticService {
     public List<StockFundamentals> getAllSfJPA() {
         return stockFundamentalsRepository.findAll();
     }
+
+    public Optional<Sector> getSectorLookupById(Integer sectorId) {
+        return sectorLookupRepository.findById(sectorId);
+    }
+
+
+    public List<StockFundamentals> getAllStocksBySectorID(Integer sectorId) {
+//        Integer sectorIdInt = Integer.valueOf(sectorId);
+     return stockFundamentalsRepository.findAll()
+                .stream()
+                .filter(s-> sectorId.equals(s.getSector().getSectorId())).toList();
+    }
 }

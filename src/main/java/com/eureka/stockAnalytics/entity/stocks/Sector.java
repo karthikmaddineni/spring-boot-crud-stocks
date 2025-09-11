@@ -33,6 +33,9 @@ public class Sector {
     public String getSectorName() {
         return sectorName;
     }
+    public Integer getSectorId(){
+        return sectorId;
+    }
 
     public void setSectorName(String sectorName) {
         this.sectorName = sectorName;
