@@ -1,5 +1,6 @@
 package com.eureka.stockAnalytics.entity.crud;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -8,7 +9,7 @@ public class Address {
     @Column(name="address_id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int addressId;
+    private Integer addressId;
     @Column(name = "line1")
     private String line1;
     @Column(name = "line2")
@@ -17,17 +18,29 @@ public class Address {
     private String city;
     @Column(name = "state")
     private String state;
-    @Column(name = "zipCode")
-    private String zipCode;
+    @Column(name = "zip_code")
+    private Integer zipCode;
     //=============================================================
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "person_id")
     private Person person;
+
+    public Person getPerson() {
+        return person;
+    }
+    public String getPersonName(){
+        return person.getFirstName()+" "+person.getLastName();
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
 
     public Address() {
     }
 
-    public Address(int addressId, String line1, String line2, String city, String state, String zipCode) {
+    public Address(int addressId, String line1, String line2, String city, String state, Integer zipCode) {
         this.addressId = addressId;
         this.line1 = line1;
         this.line2 = line2;
@@ -76,11 +89,11 @@ public class Address {
         this.state = state;
     }
 
-    public String getZipCode() {
+    public Integer getZipCode() {
         return zipCode;
     }
 
-    public void setZipCode(String zipCode) {
+    public void setZipCode(Integer zipCode) {
         this.zipCode = zipCode;
     }
 }

@@ -9510,7 +9510,7 @@ Unconditional classes:
 	Validation Mode: AUTO
 	Jar files URLs []
 	Managed classes names [
-		com.eureka.stockAnalytics.entity.stocks.SectorLook
+		com.eureka.stockAnalytics.entity.stocks.Sector
 		com.eureka.stockAnalytics.entity.stocks.StockFundamentals]
 	Mapping files names []
 	Properties []
@@ -9770,16 +9770,16 @@ Unconditional classes:
 2025-09-07 20:39:41.262 [main] DEBUG o.h.boot.model.relational.Namespace - Created database namespace [logicalName=Name{catalog=null, schema=null}, physicalName=Name{catalog=null, schema=null}]
 2025-09-07 20:39:41.265 [HikariPool-1:connection-adder] DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - After adding stats (total=2/10, idle=2/10, active=0, waiting=0)
 2025-09-07 20:39:41.265 [HikariPool-1:connection-adder] DEBUG com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Attempting to create/setup new connection (4ef09ed6-5251-4311-aa81-1ac68d4f1900)
-2025-09-07 20:39:41.294 [main] DEBUG o.h.boot.model.internal.EntityBinder - Binding entity from annotated class: com.eureka.stockAnalytics.entity.stocks.SectorLook
+2025-09-07 20:39:41.294 [main] DEBUG o.h.boot.model.internal.EntityBinder - Binding entity from annotated class: com.eureka.stockAnalytics.entity.stocks.Sector
 2025-09-07 20:39:41.300 [main] DEBUG o.h.boot.model.internal.EntityBinder - Import with entity name SectorLook
 2025-09-07 20:39:41.305 [main] DEBUG o.h.boot.model.relational.Namespace - Created database namespace [logicalName=Name{catalog=null, schema=endeavour}, physicalName=Name{catalog=null, schema=endeavour}]
-2025-09-07 20:39:41.308 [main] DEBUG o.h.boot.model.internal.EntityBinder - Bind entity com.eureka.stockAnalytics.entity.stocks.SectorLook on table stock_fundamentals
+2025-09-07 20:39:41.308 [main] DEBUG o.h.boot.model.internal.EntityBinder - Bind entity com.eureka.stockAnalytics.entity.stocks.Sector on table stock_fundamentals
 2025-09-07 20:39:41.322 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedDiscriminatorColumn(column='DTYPE')
 2025-09-07 20:39:41.339 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedColumn(column='sector_id')
-2025-09-07 20:39:41.340 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - Not known whether passed class name [com.eureka.stockAnalytics.entity.stocks.SectorLook] is safe
-2025-09-07 20:39:41.340 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.eureka.stockAnalytics.entity.stocks.SectorLook
+2025-09-07 20:39:41.340 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - Not known whether passed class name [com.eureka.stockAnalytics.entity.stocks.Sector] is safe
+2025-09-07 20:39:41.340 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.eureka.stockAnalytics.entity.stocks.Sector
 2025-09-07 20:39:41.345 [main] DEBUG o.h.b.model.internal.PropertyBinder - MetadataSourceProcessor property sectorId with lazy=false
-2025-09-07 20:39:41.350 [main] DEBUG o.h.b.m.i.AbstractPropertyHolder - Attempting to locate auto-apply AttributeConverter for property [com.eureka.stockAnalytics.entity.stocks.SectorLook:sectorId]
+2025-09-07 20:39:41.350 [main] DEBUG o.h.b.m.i.AbstractPropertyHolder - Attempting to locate auto-apply AttributeConverter for property [com.eureka.stockAnalytics.entity.stocks.Sector:sectorId]
 2025-09-07 20:39:41.356 [HikariPool-1:connection-adder] DEBUG com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Established new connection (4ef09ed6-5251-4311-aa81-1ac68d4f1900)
 2025-09-07 20:39:41.356 [HikariPool-1:connection-adder] DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@158dea86
 2025-09-07 20:39:41.357 [main] DEBUG o.h.b.m.internal.BasicValueBinder - building BasicValue for sectorId
@@ -9787,7 +9787,7 @@ Unconditional classes:
 2025-09-07 20:39:41.361 [main] DEBUG o.h.b.model.internal.PropertyBinder - Building property sectorId
 2025-09-07 20:39:41.365 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedColumn(column='sector_name')
 2025-09-07 20:39:41.365 [main] DEBUG o.h.b.model.internal.PropertyBinder - MetadataSourceProcessor property sectorName with lazy=false
-2025-09-07 20:39:41.365 [main] DEBUG o.h.b.m.i.AbstractPropertyHolder - Attempting to locate auto-apply AttributeConverter for property [com.eureka.stockAnalytics.entity.stocks.SectorLook:sectorName]
+2025-09-07 20:39:41.365 [main] DEBUG o.h.b.m.i.AbstractPropertyHolder - Attempting to locate auto-apply AttributeConverter for property [com.eureka.stockAnalytics.entity.stocks.Sector:sectorName]
 2025-09-07 20:39:41.365 [main] DEBUG o.h.b.m.internal.BasicValueBinder - building BasicValue for sectorName
 2025-09-07 20:39:41.366 [main] DEBUG org.hibernate.mapping.BasicValue - Skipping column re-registration: stock_fundamentals.sector_name
 2025-09-07 20:39:41.366 [main] DEBUG o.h.b.model.internal.PropertyBinder - Building property sectorName
@@ -10243,43 +10243,43 @@ Unconditional classes:
 2025-09-07 20:39:41.757 [main] DEBUG o.h.e.i.EntityCopyObserverFactoryInitiator - Configured EntityCopyObserver strategy: disallow
 2025-09-07 20:39:41.763 [HikariPool-1:connection-adder] DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - After adding stats (total=6/10, idle=6/10, active=0, waiting=0)
 2025-09-07 20:39:41.764 [HikariPool-1:connection-adder] DEBUG com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Attempting to create/setup new connection (17c3690b-e10b-492d-801a-6e207eed9e74)
-2025-09-07 20:39:41.837 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - Not known whether passed class name [com.eureka.stockAnalytics.entity.stocks.SectorLook] is safe
-2025-09-07 20:39:41.837 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.eureka.stockAnalytics.entity.stocks.SectorLook
+2025-09-07 20:39:41.837 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - Not known whether passed class name [com.eureka.stockAnalytics.entity.stocks.Sector] is safe
+2025-09-07 20:39:41.837 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.eureka.stockAnalytics.entity.stocks.Sector
 2025-09-07 20:39:41.857 [HikariPool-1:connection-adder] DEBUG com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Established new connection (17c3690b-e10b-492d-801a-6e207eed9e74)
 2025-09-07 20:39:41.857 [HikariPool-1:connection-adder] DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@65ae73f6
 2025-09-07 20:39:41.889 [HikariPool-1:connection-adder] DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - After adding stats (total=7/10, idle=7/10, active=0, waiting=0)
 2025-09-07 20:39:41.889 [HikariPool-1:connection-adder] DEBUG com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Attempting to create/setup new connection (b1493e09-971e-4680-87ad-fd9a15999b71)
 2025-09-07 20:39:41.994 [HikariPool-1:connection-adder] DEBUG com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Established new connection (b1493e09-971e-4680-87ad-fd9a15999b71)
 2025-09-07 20:39:41.994 [HikariPool-1:connection-adder] DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@67f9aeb8
-2025-09-07 20:39:42.011 [main] DEBUG o.h.b.i.b.BytecodeProviderImpl - HHH000513: Unable to create the ReflectionOptimizer for [com.eureka.stockAnalytics.entity.stocks.SectorLook]: private accessor [sectorName]
+2025-09-07 20:39:42.011 [main] DEBUG o.h.b.i.b.BytecodeProviderImpl - HHH000513: Unable to create the ReflectionOptimizer for [com.eureka.stockAnalytics.entity.stocks.Sector]: private accessor [sectorName]
 2025-09-07 20:39:42.025 [HikariPool-1:connection-adder] DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - After adding stats (total=8/10, idle=8/10, active=0, waiting=0)
 2025-09-07 20:39:42.025 [HikariPool-1:connection-adder] DEBUG com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Attempting to create/setup new connection (6565beb4-aed1-471e-9580-e61cc88df28a)
 2025-09-07 20:39:42.048 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - Not known whether passed class name [com.eureka.stockAnalytics.entity.stocks.StockFundamentals] is safe
 2025-09-07 20:39:42.048 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.eureka.stockAnalytics.entity.stocks.StockFundamentals
 2025-09-07 20:39:42.061 [main] DEBUG o.h.b.i.b.BytecodeProviderImpl - HHH000513: Unable to create the ReflectionOptimizer for [com.eureka.stockAnalytics.entity.stocks.StockFundamentals]: private accessor [currentRatio]
 2025-09-07 20:39:42.084 [main] DEBUG o.h.orm.model.mapping.creation - Starting post-init callbacks
-2025-09-07 20:39:42.084 [main] DEBUG o.h.orm.model.mapping.creation - Starting PostInitCallbackEntry : Entity(com.eureka.stockAnalytics.entity.stocks.SectorLook) `staticFetchableList` generator
+2025-09-07 20:39:42.084 [main] DEBUG o.h.orm.model.mapping.creation - Starting PostInitCallbackEntry : Entity(com.eureka.stockAnalytics.entity.stocks.Sector) `staticFetchableList` generator
 2025-09-07 20:39:42.084 [main] DEBUG o.h.orm.model.mapping.creation - Starting PostInitCallbackEntry : Entity(com.eureka.stockAnalytics.entity.stocks.StockFundamentals) `staticFetchableList` generator
 2025-09-07 20:39:42.129 [HikariPool-1:connection-adder] DEBUG com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Established new connection (6565beb4-aed1-471e-9580-e61cc88df28a)
 2025-09-07 20:39:42.129 [HikariPool-1:connection-adder] DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@349f1ff2
 2025-09-07 20:39:42.159 [HikariPool-1:connection-adder] DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - After adding stats (total=9/10, idle=9/10, active=0, waiting=0)
 2025-09-07 20:39:42.159 [HikariPool-1:connection-adder] DEBUG com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Attempting to create/setup new connection (69b60052-7a43-4835-94d6-c09959d18f38)
 2025-09-07 20:39:42.193 [main] DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : sl1_0
-2025-09-07 20:39:42.195 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(com.eureka.stockAnalytics.entity.stocks.SectorLook)] with identifierForTableGroup [com.eureka.stockAnalytics.entity.stocks.SectorLook] for NavigablePath [com.eureka.stockAnalytics.entity.stocks.SectorLook] 
+2025-09-07 20:39:42.195 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(com.eureka.stockAnalytics.entity.stocks.Sector)] with identifierForTableGroup [com.eureka.stockAnalytics.entity.stocks.Sector] for NavigablePath [com.eureka.stockAnalytics.entity.stocks.Sector]
 2025-09-07 20:39:42.213 [main] DEBUG org.hibernate.orm.results.graph.AST - DomainResult Graph:
- \-EntityResultImpl [com.eureka.stockAnalytics.entity.stocks.SectorLook]
- |  \-BasicFetch [com.eureka.stockAnalytics.entity.stocks.SectorLook.sectorName]
+ \-EntityResultImpl [com.eureka.stockAnalytics.entity.stocks.Sector]
+ |  \-BasicFetch [com.eureka.stockAnalytics.entity.stocks.Sector.sectorName]
 
 2025-09-07 20:39:42.215 [main] DEBUG org.hibernate.orm.sql.ast.tree - SQL AST Tree:
     SelectStatement {
       FromClause {
-        StandardTableGroup (sl1 : com.eureka.stockAnalytics.entity.stocks.SectorLook) {
+        StandardTableGroup (sl1 : com.eureka.stockAnalytics.entity.stocks.Sector) {
           primaryTableReference : endeavour.stock_fundamentals as sl1_0
         }
       }
     }
 
-2025-09-07 20:39:42.229 [main] DEBUG o.h.p.entity.AbstractEntityPersister - Static SQL for entity: com.eureka.stockAnalytics.entity.stocks.SectorLook
+2025-09-07 20:39:42.229 [main] DEBUG o.h.p.entity.AbstractEntityPersister - Static SQL for entity: com.eureka.stockAnalytics.entity.stocks.Sector
 2025-09-07 20:39:42.229 [main] DEBUG o.h.p.entity.AbstractEntityPersister -  Version select: select sector_id from endeavour.stock_fundamentals where sector_id=?
 2025-09-07 20:39:42.230 [main] DEBUG o.h.p.entity.AbstractEntityPersister -  Insert (0): insert into endeavour.stock_fundamentals (sector_name,sector_id) values (?,?)
 2025-09-07 20:39:42.230 [main] DEBUG o.h.p.entity.AbstractEntityPersister -  Update (0): update endeavour.stock_fundamentals set sector_name=? where sector_id=?
@@ -12191,15 +12191,15 @@ Unconditional classes:
 2025-09-07 20:40:10.358 [http-nio-65000-exec-2] DEBUG o.h.e.t.internal.TransactionImpl - begin
 2025-09-07 20:40:10.360 [http-nio-65000-exec-2] DEBUG o.s.orm.jpa.JpaTransactionManager - Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@5bf3d923]
 2025-09-07 20:40:10.484 [http-nio-65000-exec-2] DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : sl1_0
-2025-09-07 20:40:10.485 [http-nio-65000-exec-2] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(com.eureka.stockAnalytics.entity.stocks.SectorLook(1))] with identifierForTableGroup [com.eureka.stockAnalytics.entity.stocks.SectorLook] for NavigablePath [com.eureka.stockAnalytics.entity.stocks.SectorLook] 
+2025-09-07 20:40:10.485 [http-nio-65000-exec-2] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(com.eureka.stockAnalytics.entity.stocks.Sector(1))] with identifierForTableGroup [com.eureka.stockAnalytics.entity.stocks.Sector] for NavigablePath [com.eureka.stockAnalytics.entity.stocks.Sector]
 2025-09-07 20:40:10.497 [http-nio-65000-exec-2] DEBUG org.hibernate.orm.results.graph.AST - DomainResult Graph:
- \-EntityResultImpl [com.eureka.stockAnalytics.entity.stocks.SectorLook(1)]
- |  \-BasicFetch [com.eureka.stockAnalytics.entity.stocks.SectorLook(1).sectorName]
+ \-EntityResultImpl [com.eureka.stockAnalytics.entity.stocks.Sector(1)]
+ |  \-BasicFetch [com.eureka.stockAnalytics.entity.stocks.Sector(1).sectorName]
 
 2025-09-07 20:40:10.497 [http-nio-65000-exec-2] DEBUG org.hibernate.orm.sql.ast.tree - SQL AST Tree:
     SelectStatement {
       FromClause {
-        StandardTableGroup (sl1 : com.eureka.stockAnalytics.entity.stocks.SectorLook(1)) {
+        StandardTableGroup (sl1 : com.eureka.stockAnalytics.entity.stocks.Sector(1)) {
           primaryTableReference : endeavour.stock_fundamentals as sl1_0
         }
       }
@@ -12718,7 +12718,7 @@ org.postgresql.util.PSQLException: ERROR: column sl1_0.sector_name does not exis
 	Validation Mode: AUTO
 	Jar files URLs []
 	Managed classes names [
-		com.eureka.stockAnalytics.entity.stocks.SectorLook
+		com.eureka.stockAnalytics.entity.stocks.Sector
 		com.eureka.stockAnalytics.entity.stocks.StockFundamentals]
 	Mapping files names []
 	Properties []
@@ -12980,24 +12980,24 @@ org.postgresql.util.PSQLException: ERROR: column sl1_0.sector_name does not exis
 2025-09-07 20:41:24.883 [main] DEBUG o.h.boot.model.relational.Namespace - Created database namespace [logicalName=Name{catalog=null, schema=null}, physicalName=Name{catalog=null, schema=null}]
 2025-09-07 20:41:24.892 [HikariPool-1:connection-adder] DEBUG com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Established new connection (a5b0ffaa-4b9c-458e-bcd7-c69d0d8b936d)
 2025-09-07 20:41:24.892 [HikariPool-1:connection-adder] DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@2e5f1c8
-2025-09-07 20:41:24.919 [main] DEBUG o.h.boot.model.internal.EntityBinder - Binding entity from annotated class: com.eureka.stockAnalytics.entity.stocks.SectorLook
+2025-09-07 20:41:24.919 [main] DEBUG o.h.boot.model.internal.EntityBinder - Binding entity from annotated class: com.eureka.stockAnalytics.entity.stocks.Sector
 2025-09-07 20:41:24.925 [HikariPool-1:connection-adder] DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - After adding stats (total=3/10, idle=3/10, active=0, waiting=0)
 2025-09-07 20:41:24.925 [HikariPool-1:connection-adder] DEBUG com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Attempting to create/setup new connection (297cb79b-fabd-48c0-be2b-0881a3ddbf97)
 2025-09-07 20:41:24.929 [main] DEBUG o.h.boot.model.internal.EntityBinder - Import with entity name SectorLook
 2025-09-07 20:41:24.933 [main] DEBUG o.h.boot.model.relational.Namespace - Created database namespace [logicalName=Name{catalog=null, schema=endeavour}, physicalName=Name{catalog=null, schema=endeavour}]
-2025-09-07 20:41:24.938 [main] DEBUG o.h.boot.model.internal.EntityBinder - Bind entity com.eureka.stockAnalytics.entity.stocks.SectorLook on table sector_lookup
+2025-09-07 20:41:24.938 [main] DEBUG o.h.boot.model.internal.EntityBinder - Bind entity com.eureka.stockAnalytics.entity.stocks.Sector on table sector_lookup
 2025-09-07 20:41:24.953 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedDiscriminatorColumn(column='DTYPE')
 2025-09-07 20:41:24.973 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedColumn(column='sector_id')
-2025-09-07 20:41:24.975 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - Not known whether passed class name [com.eureka.stockAnalytics.entity.stocks.SectorLook] is safe
-2025-09-07 20:41:24.975 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.eureka.stockAnalytics.entity.stocks.SectorLook
+2025-09-07 20:41:24.975 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - Not known whether passed class name [com.eureka.stockAnalytics.entity.stocks.Sector] is safe
+2025-09-07 20:41:24.975 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.eureka.stockAnalytics.entity.stocks.Sector
 2025-09-07 20:41:24.980 [main] DEBUG o.h.b.model.internal.PropertyBinder - MetadataSourceProcessor property sectorId with lazy=false
-2025-09-07 20:41:24.986 [main] DEBUG o.h.b.m.i.AbstractPropertyHolder - Attempting to locate auto-apply AttributeConverter for property [com.eureka.stockAnalytics.entity.stocks.SectorLook:sectorId]
+2025-09-07 20:41:24.986 [main] DEBUG o.h.b.m.i.AbstractPropertyHolder - Attempting to locate auto-apply AttributeConverter for property [com.eureka.stockAnalytics.entity.stocks.Sector:sectorId]
 2025-09-07 20:41:24.993 [main] DEBUG o.h.b.m.internal.BasicValueBinder - building BasicValue for sectorId
 2025-09-07 20:41:24.997 [main] DEBUG org.hibernate.mapping.BasicValue - Skipping column re-registration: sector_lookup.sector_id
 2025-09-07 20:41:24.999 [main] DEBUG o.h.b.model.internal.PropertyBinder - Building property sectorId
 2025-09-07 20:41:25.002 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedColumn(column='sector_name')
 2025-09-07 20:41:25.002 [main] DEBUG o.h.b.model.internal.PropertyBinder - MetadataSourceProcessor property sectorName with lazy=false
-2025-09-07 20:41:25.002 [main] DEBUG o.h.b.m.i.AbstractPropertyHolder - Attempting to locate auto-apply AttributeConverter for property [com.eureka.stockAnalytics.entity.stocks.SectorLook:sectorName]
+2025-09-07 20:41:25.002 [main] DEBUG o.h.b.m.i.AbstractPropertyHolder - Attempting to locate auto-apply AttributeConverter for property [com.eureka.stockAnalytics.entity.stocks.Sector:sectorName]
 2025-09-07 20:41:25.003 [main] DEBUG o.h.b.m.internal.BasicValueBinder - building BasicValue for sectorName
 2025-09-07 20:41:25.003 [main] DEBUG org.hibernate.mapping.BasicValue - Skipping column re-registration: sector_lookup.sector_name
 2025-09-07 20:41:25.003 [main] DEBUG o.h.b.model.internal.PropertyBinder - Building property sectorName
@@ -13457,41 +13457,41 @@ org.postgresql.util.PSQLException: ERROR: column sl1_0.sector_name does not exis
 2025-09-07 20:41:25.435 [main] DEBUG o.h.e.i.EntityCopyObserverFactoryInitiator - Configured EntityCopyObserver strategy: disallow
 2025-09-07 20:41:25.536 [HikariPool-1:connection-adder] DEBUG com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Established new connection (f7da49ef-88ac-4b25-9814-21ae5ec9ed78)
 2025-09-07 20:41:25.536 [HikariPool-1:connection-adder] DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@277464c2
-2025-09-07 20:41:25.541 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - Not known whether passed class name [com.eureka.stockAnalytics.entity.stocks.SectorLook] is safe
-2025-09-07 20:41:25.541 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.eureka.stockAnalytics.entity.stocks.SectorLook
+2025-09-07 20:41:25.541 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - Not known whether passed class name [com.eureka.stockAnalytics.entity.stocks.Sector] is safe
+2025-09-07 20:41:25.541 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.eureka.stockAnalytics.entity.stocks.Sector
 2025-09-07 20:41:25.568 [HikariPool-1:connection-adder] DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - After adding stats (total=8/10, idle=8/10, active=0, waiting=0)
 2025-09-07 20:41:25.568 [HikariPool-1:connection-adder] DEBUG com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Attempting to create/setup new connection (8f77c773-a270-4a22-a320-5a51aa4fb65e)
 2025-09-07 20:41:25.652 [HikariPool-1:connection-adder] DEBUG com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Established new connection (8f77c773-a270-4a22-a320-5a51aa4fb65e)
 2025-09-07 20:41:25.652 [HikariPool-1:connection-adder] DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@23f704bc
 2025-09-07 20:41:25.684 [HikariPool-1:connection-adder] DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - After adding stats (total=9/10, idle=9/10, active=0, waiting=0)
 2025-09-07 20:41:25.684 [HikariPool-1:connection-adder] DEBUG com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Attempting to create/setup new connection (f778a311-23ad-4c12-b1f7-14b54ceefb12)
-2025-09-07 20:41:25.718 [main] DEBUG o.h.b.i.b.BytecodeProviderImpl - HHH000513: Unable to create the ReflectionOptimizer for [com.eureka.stockAnalytics.entity.stocks.SectorLook]: private accessor [sectorName]
+2025-09-07 20:41:25.718 [main] DEBUG o.h.b.i.b.BytecodeProviderImpl - HHH000513: Unable to create the ReflectionOptimizer for [com.eureka.stockAnalytics.entity.stocks.Sector]: private accessor [sectorName]
 2025-09-07 20:41:25.759 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - Not known whether passed class name [com.eureka.stockAnalytics.entity.stocks.StockFundamentals] is safe
 2025-09-07 20:41:25.759 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.eureka.stockAnalytics.entity.stocks.StockFundamentals
 2025-09-07 20:41:25.773 [HikariPool-1:connection-adder] DEBUG com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Established new connection (f778a311-23ad-4c12-b1f7-14b54ceefb12)
 2025-09-07 20:41:25.773 [main] DEBUG o.h.b.i.b.BytecodeProviderImpl - HHH000513: Unable to create the ReflectionOptimizer for [com.eureka.stockAnalytics.entity.stocks.StockFundamentals]: private accessor [currentRatio]
 2025-09-07 20:41:25.773 [HikariPool-1:connection-adder] DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@42f3fb06
 2025-09-07 20:41:25.796 [main] DEBUG o.h.orm.model.mapping.creation - Starting post-init callbacks
-2025-09-07 20:41:25.796 [main] DEBUG o.h.orm.model.mapping.creation - Starting PostInitCallbackEntry : Entity(com.eureka.stockAnalytics.entity.stocks.SectorLook) `staticFetchableList` generator
+2025-09-07 20:41:25.796 [main] DEBUG o.h.orm.model.mapping.creation - Starting PostInitCallbackEntry : Entity(com.eureka.stockAnalytics.entity.stocks.Sector) `staticFetchableList` generator
 2025-09-07 20:41:25.796 [main] DEBUG o.h.orm.model.mapping.creation - Starting PostInitCallbackEntry : Entity(com.eureka.stockAnalytics.entity.stocks.StockFundamentals) `staticFetchableList` generator
 2025-09-07 20:41:25.805 [HikariPool-1:connection-adder] DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - After adding stats (total=10/10, idle=10/10, active=0, waiting=0)
 2025-09-07 20:41:25.805 [HikariPool-1:connection-adder] DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Connection not added, stats (total=10/10, idle=10/10, active=0, waiting=0)
 2025-09-07 20:41:25.894 [main] DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : sl1_0
-2025-09-07 20:41:25.898 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(com.eureka.stockAnalytics.entity.stocks.SectorLook)] with identifierForTableGroup [com.eureka.stockAnalytics.entity.stocks.SectorLook] for NavigablePath [com.eureka.stockAnalytics.entity.stocks.SectorLook] 
+2025-09-07 20:41:25.898 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(com.eureka.stockAnalytics.entity.stocks.Sector)] with identifierForTableGroup [com.eureka.stockAnalytics.entity.stocks.Sector] for NavigablePath [com.eureka.stockAnalytics.entity.stocks.Sector]
 2025-09-07 20:41:25.916 [main] DEBUG org.hibernate.orm.results.graph.AST - DomainResult Graph:
- \-EntityResultImpl [com.eureka.stockAnalytics.entity.stocks.SectorLook]
- |  \-BasicFetch [com.eureka.stockAnalytics.entity.stocks.SectorLook.sectorName]
+ \-EntityResultImpl [com.eureka.stockAnalytics.entity.stocks.Sector]
+ |  \-BasicFetch [com.eureka.stockAnalytics.entity.stocks.Sector.sectorName]
 
 2025-09-07 20:41:25.919 [main] DEBUG org.hibernate.orm.sql.ast.tree - SQL AST Tree:
     SelectStatement {
       FromClause {
-        StandardTableGroup (sl1 : com.eureka.stockAnalytics.entity.stocks.SectorLook) {
+        StandardTableGroup (sl1 : com.eureka.stockAnalytics.entity.stocks.Sector) {
           primaryTableReference : endeavour.sector_lookup as sl1_0
         }
       }
     }
 
-2025-09-07 20:41:25.938 [main] DEBUG o.h.p.entity.AbstractEntityPersister - Static SQL for entity: com.eureka.stockAnalytics.entity.stocks.SectorLook
+2025-09-07 20:41:25.938 [main] DEBUG o.h.p.entity.AbstractEntityPersister - Static SQL for entity: com.eureka.stockAnalytics.entity.stocks.Sector
 2025-09-07 20:41:25.938 [main] DEBUG o.h.p.entity.AbstractEntityPersister -  Version select: select sector_id from endeavour.sector_lookup where sector_id=?
 2025-09-07 20:41:25.938 [main] DEBUG o.h.p.entity.AbstractEntityPersister -  Insert (0): insert into endeavour.sector_lookup (sector_name,sector_id) values (?,?)
 2025-09-07 20:41:25.938 [main] DEBUG o.h.p.entity.AbstractEntityPersister -  Update (0): update endeavour.sector_lookup set sector_name=? where sector_id=?
@@ -15399,15 +15399,15 @@ Unconditional classes:
 2025-09-07 20:41:30.913 [http-nio-65000-exec-1] DEBUG o.h.e.t.internal.TransactionImpl - begin
 2025-09-07 20:41:30.913 [http-nio-65000-exec-1] DEBUG o.s.orm.jpa.JpaTransactionManager - Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@bf51174]
 2025-09-07 20:41:31.034 [http-nio-65000-exec-1] DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : sl1_0
-2025-09-07 20:41:31.035 [http-nio-65000-exec-1] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(com.eureka.stockAnalytics.entity.stocks.SectorLook(1))] with identifierForTableGroup [com.eureka.stockAnalytics.entity.stocks.SectorLook] for NavigablePath [com.eureka.stockAnalytics.entity.stocks.SectorLook] 
+2025-09-07 20:41:31.035 [http-nio-65000-exec-1] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(com.eureka.stockAnalytics.entity.stocks.Sector(1))] with identifierForTableGroup [com.eureka.stockAnalytics.entity.stocks.Sector] for NavigablePath [com.eureka.stockAnalytics.entity.stocks.Sector]
 2025-09-07 20:41:31.050 [http-nio-65000-exec-1] DEBUG org.hibernate.orm.results.graph.AST - DomainResult Graph:
- \-EntityResultImpl [com.eureka.stockAnalytics.entity.stocks.SectorLook(1)]
- |  \-BasicFetch [com.eureka.stockAnalytics.entity.stocks.SectorLook(1).sectorName]
+ \-EntityResultImpl [com.eureka.stockAnalytics.entity.stocks.Sector(1)]
+ |  \-BasicFetch [com.eureka.stockAnalytics.entity.stocks.Sector(1).sectorName]
 
 2025-09-07 20:41:31.051 [http-nio-65000-exec-1] DEBUG org.hibernate.orm.sql.ast.tree - SQL AST Tree:
     SelectStatement {
       FromClause {
-        StandardTableGroup (sl1 : com.eureka.stockAnalytics.entity.stocks.SectorLook(1)) {
+        StandardTableGroup (sl1 : com.eureka.stockAnalytics.entity.stocks.Sector(1)) {
           primaryTableReference : endeavour.sector_lookup as sl1_0
         }
       }
@@ -15416,7 +15416,7 @@ Unconditional classes:
 2025-09-07 20:41:31.068 [http-nio-65000-exec-1] DEBUG org.hibernate.orm.sql.exec - Skipping reading Query result cache data: cache-enabled = false, cache-mode = NORMAL
 2025-09-07 20:41:31.075 [http-nio-65000-exec-1] DEBUG org.hibernate.SQL - select sl1_0.sector_id,sl1_0.sector_name from endeavour.sector_lookup sl1_0
 2025-09-07 20:41:31.117 [http-nio-65000-exec-1] DEBUG org.hibernate.orm.results - Initializer list:
-	  com.eureka.stockAnalytics.entity.stocks.SectorLook(1) -> EntityJoinedFetchInitializer(com.eureka.stockAnalytics.entity.stocks.SectorLook(1))@829256371 (SingleTableEntityPersister(com.eureka.stockAnalytics.entity.stocks.SectorLook))
+	  com.eureka.stockAnalytics.entity.stocks.Sector(1) -> EntityJoinedFetchInitializer(com.eureka.stockAnalytics.entity.stocks.Sector(1))@829256371 (SingleTableEntityPersister(com.eureka.stockAnalytics.entity.stocks.Sector))
 
 2025-09-07 20:41:31.139 [http-nio-65000-exec-1] DEBUG o.s.orm.jpa.JpaTransactionManager - Initiating transaction commit
 2025-09-07 20:41:31.140 [http-nio-65000-exec-1] DEBUG o.s.orm.jpa.JpaTransactionManager - Committing JPA transaction on EntityManager [SessionImpl(2039422562<open>)]
@@ -15424,7 +15424,7 @@ Unconditional classes:
 2025-09-07 20:41:31.155 [http-nio-65000-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Resetting read-only flag of JDBC Connection [HikariProxyConnection@767173888 wrapping org.postgresql.jdbc.PgConnection@77ea960f]
 2025-09-07 20:41:31.156 [http-nio-65000-exec-1] DEBUG o.s.orm.jpa.JpaTransactionManager - Not closing pre-bound JPA EntityManager after transaction
 2025-09-07 20:41:31.177 [http-nio-65000-exec-1] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
-2025-09-07 20:41:31.179 [http-nio-65000-exec-1] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Writing [[com.eureka.stockAnalytics.entity.stocks.SectorLook@1013a39c, com.eureka.stockAnalytics.entity.stock (truncated)...]
+2025-09-07 20:41:31.179 [http-nio-65000-exec-1] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Writing [[com.eureka.stockAnalytics.entity.stocks.Sector@1013a39c, com.eureka.stockAnalytics.entity.stock (truncated)...]
 2025-09-07 20:41:31.229 [http-nio-65000-exec-1] DEBUG o.s.o.j.s.OpenEntityManagerInViewInterceptor - Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
 2025-09-07 20:41:31.231 [http-nio-65000-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-09-07 20:41:54.667 [HikariPool-1:housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10/10, idle=10/10, active=0, waiting=0)

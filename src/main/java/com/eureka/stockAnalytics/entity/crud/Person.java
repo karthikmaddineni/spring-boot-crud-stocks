@@ -11,7 +11,7 @@ public class Person {
     @Column(name = "person_id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int personId;
+    private Integer personId;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
@@ -19,8 +19,16 @@ public class Person {
     @Column(name = "dob")
     private LocalDate dob;
     //===========================================================
-//    @OneToMany(mappedBy = "person",fetch = FetchType.EAGER)
-//    private List<Address> addressList;
+    @OneToMany(mappedBy = "person",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Address> addressList;
+
+    public List<Address> getAddressList() {
+        return addressList;
+    }
+
+    public void setAddressList(List<Address> addressList) {
+        this.addressList = addressList;
+    }
 
     @Override
     public String toString() {
@@ -42,11 +50,11 @@ public class Person {
         this.dob = dob;
     }
 
-    public int getPersonId() {
+    public Integer getPersonId() {
         return personId;
     }
 
-    public void setPersonId(int personId) {
+    public void setPersonId(Integer personId) {
         this.personId = personId;
     }
 

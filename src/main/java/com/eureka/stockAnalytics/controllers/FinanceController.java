@@ -1,8 +1,9 @@
 package com.eureka.stockAnalytics.controllers;
 
 import com.eureka.stockAnalytics.VO.*;
-import com.eureka.stockAnalytics.entity.stocks.SectorLook;
+import com.eureka.stockAnalytics.entity.stocks.Sector;
 import com.eureka.stockAnalytics.entity.stocks.StockFundamentals;
+import com.eureka.stockAnalytics.entity.stocks.SubSector;
 import com.eureka.stockAnalytics.service.FinanceAnalylticService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -90,10 +91,23 @@ public class FinanceController {
         return financeAnalylticService.getAllStockFundamentalsByIdJPA(ticker);
     }
     @GetMapping(value = "/getAllSectorLookupByIdJPA")
-    public List<SectorLook> getAllSectorLookupByIdJPA(){
+    public List<Sector> getAllSectorLookupByIdJPA(){
         return financeAnalylticService.getAllSectorLookupByIdJPA();
     }
 
+    @GetMapping(value = "/getAllSectors")
+    public List<Sector> getAllSectors(){
+        return financeAnalylticService.getAllSectors();
+    }
+    @GetMapping(value = "/getAllSubSubSectors")
+    public List<SubSector> getAllSubSubSectors(){
+        return financeAnalylticService.getAllSubSubSectors();
+    }
+
+    @GetMapping(value = "/getAllSfJPA")
+    public List<StockFundamentals> getAllSfJPA(){
+        return financeAnalylticService.getAllSfJPA();
+    }
 
 
 }
