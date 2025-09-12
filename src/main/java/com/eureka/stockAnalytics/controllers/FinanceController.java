@@ -3,6 +3,7 @@ package com.eureka.stockAnalytics.controllers;
 import com.eureka.stockAnalytics.VO.*;
 import com.eureka.stockAnalytics.entity.stocks.Sector;
 import com.eureka.stockAnalytics.entity.stocks.StockFundamentals;
+import com.eureka.stockAnalytics.entity.stocks.StockPriceHistory;
 import com.eureka.stockAnalytics.entity.stocks.SubSector;
 import com.eureka.stockAnalytics.service.FinanceAnalylticService;
 import org.slf4j.Logger;
@@ -118,5 +119,21 @@ public class FinanceController {
     public List<StockFundamentals> getAllStocksBySectorID(@PathVariable(value = "sectorID") Integer sectorId){
         return financeAnalylticService.getAllStocksBySectorID(sectorId);
     }
+    @GetMapping(value = "/getStockPriceHistoryForDay")
+    public StockPriceHistory getStockPriceHistoryForDay(@RequestParam(value = "ticker") String ticker,
+                                                        @RequestParam(value = "date")
+                                                        @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate tradingDate){
+        return financeAnalylticService.getStockPriceHistoryForDay(ticker,tradingDate);
+    }
+    @GetMapping(value = "/getTopStockForEachSector")
+    public List<TopStockBySectorVO> getTopStockForEachSector(){
+        return financeAnalylticService.getTopStockForEachSector();
+    }
+
+    @GetMapping(value = "/getTop5StockForEachSector")
+    public List<TopStockBySectorVO> getTop5StockForEachSector(){
+        return financeAnalylticService.getTop5StockForEachSector();
+    }
+
 
 }

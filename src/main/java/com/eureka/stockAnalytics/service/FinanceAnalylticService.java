@@ -5,9 +5,8 @@ import com.eureka.stockAnalytics.DAO.StockFundamentalsDAO;
 import com.eureka.stockAnalytics.DAO.StocksPriceHistoryDAO;
 import com.eureka.stockAnalytics.DAO.SubSectorDAO;
 import com.eureka.stockAnalytics.VO.*;
-import com.eureka.stockAnalytics.entity.stocks.Sector;
-import com.eureka.stockAnalytics.entity.stocks.StockFundamentals;
-import com.eureka.stockAnalytics.entity.stocks.SubSector;
+import com.eureka.stockAnalytics.entity.stocks.*;
+import com.eureka.stockAnalytics.repository.stocks.PriceHistoryRepository;
 import com.eureka.stockAnalytics.repository.stocks.SectorLookupRepository;
 import com.eureka.stockAnalytics.repository.stocks.StockFundamentalsRepository;
 import com.eureka.stockAnalytics.repository.stocks.SubSectorRepository;
@@ -29,6 +28,7 @@ public class FinanceAnalylticService {
     private StockFundamentalsRepository stockFundamentalsRepository;
     private SectorLookupRepository sectorLookupRepository;
     private SubSectorRepository subSectorRepository;
+    private PriceHistoryRepository priceHistoryRepository;
 
     @Autowired
     public FinanceAnalylticService(StocksPriceHistoryDAO stocksPriceHistoryDAO,
@@ -36,13 +36,15 @@ public class FinanceAnalylticService {
                                    SubSectorDAO subSectorDAO,
                                    StockFundamentalsRepository stockFundamentalsRepository,
                                    SectorLookupRepository sectorLookupRepository,
-                                   SubSectorRepository subSectorRepository){
+                                   SubSectorRepository subSectorRepository,
+                                   PriceHistoryRepository priceHistoryRepository){
         this.stocksPriceHistoryDAO = stocksPriceHistoryDAO;
         this.sectorLookupDAO = sectorLookupDAO;
         this.subSectorDAO = subSectorDAO;
         this.stockFundamentalsRepository = stockFundamentalsRepository;
         this.sectorLookupRepository = sectorLookupRepository;
         this.subSectorRepository = subSectorRepository;
+        this.priceHistoryRepository = priceHistoryRepository;
     }
     public List<PriceHistoryVO> getSpecificStockPriceHistory(String tickerSymbol, LocalDate fromDate, LocalDate toDate) {
         return stocksPriceHistoryDAO.getSpecificStockPriceHistory(tickerSymbol, fromDate, toDate);
@@ -136,5 +138,42 @@ public class FinanceAnalylticService {
      return stockFundamentalsRepository.findAll()
                 .stream()
                 .filter(s-> sectorId.equals(s.getSector().getSectorId())).toList();
+    }
+
+    public StockPriceHistory getStockPriceHistoryForDay(String ticker,LocalDate tradingDate) {
+
+        PriceHistoryKey key = new PriceHistoryKey();
+        key.setTickerSymbol(ticker);
+        key.setTradingDate(tradingDate);
+        Optional<StockPriceHistory> output = priceHistoryRepository.findById(key);
+        if(output.isPresent()){
+            return output.get();
+        }else {
+            throw new IllegalArgumentException("That date was any holiday");
+        }
+    }
+
+    public List<TopStockBySectorVO> getTopStockForEachSector() {
+        return stockFundamentalsRepository.getTopStockBySector();
+    }
+
+    public List<TopStockBySectorVO> getTop5StockForEachSector() {
+        List<TopStockBySectorVO> top5StockBySectorVOS = stockFundamentalsRepository.getTop5StockBySector();
+
+        Map<String,List<TopStockBySectorVO>> median = top5StockBySectorVOS.stream()
+                .collect(Collectors.groupingBy(TopStockBySectorVO::getSectorName));
+
+        List<CustomStockVO> finalOutput = new ArrayList<>();
+
+        median.forEach((sectorName,topStockList)->{
+            topStockList.stream().map(topStockBySectorVO -> {
+                CustomStockVO customStockVO = new CustomStockVO(
+                        topStockBySectorVO.getTickerName();
+                        topStockBySectorVO.getMarketCap());
+                return customStockVO;
+            }).collect(Collectors.toList());
+
+        });
+        return stockFundamentalsRepository.getTop5StockBySector();
     }
 }
