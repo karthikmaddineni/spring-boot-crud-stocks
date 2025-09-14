@@ -32,6 +32,7 @@ public class StockDBConfig {
     public JdbcTemplate getJdbcTemplate(){
         return new JdbcTemplate(dataSource);
     }
+
     @Bean(name="NamedParameterJdbcTemplate")
     public NamedParameterJdbcTemplate getNamedParameterJdbcTemplate(){
         return new NamedParameterJdbcTemplate(dataSource);

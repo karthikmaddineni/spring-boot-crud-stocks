@@ -17,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -129,11 +130,46 @@ public class FinanceController {
     public List<TopStockBySectorVO> getTopStockForEachSector(){
         return financeAnalylticService.getTopStockForEachSector();
     }
-
-    @GetMapping(value = "/getTop5StockForEachSector")
-    public List<TopStockBySectorVO> getTop5StockForEachSector(){
-        return financeAnalylticService.getTop5StockForEachSector();
+//
+//    @GetMapping(value = "/getTop5StockForEachSector")
+//    public List<TopStockBySectorVO> getTop5StockForEachSector(){
+//        return financeAnalylticService.getTop5StockForEachSector();
+//    }
+    @GetMapping(value = "/getTopNStocks")
+    public List<TopStockBySectorVO> getTopNStocks(@RequestParam(value = "limitvalue") Integer limitvalue){
+        return financeAnalylticService.getTopNStocks(limitvalue);
+    }
+    //get a single stock-price-history for an given year
+    @GetMapping(value = "/getSingleStockSPHforGivenYear")
+    public Map<Month,List<StockPriceHistory>> getSingleStockSPHforGivenYear(@RequestParam(value = "ticker") String ticker,
+                                                                            @RequestParam(value = "year") Integer year){
+        return financeAnalylticService.getSingleStockSPHforGivenYear(ticker,year);
+    }
+    //getNonNullCurrentRatioStocks
+    @GetMapping(value = "/getNonNullCurrentRatioStocks")
+    public List<StockFundamentals> getNonNullCurrentRatioStocks(){
+        return financeAnalylticService.getNonNullCurrentRatioStocks();
     }
 
+    @GetMapping(value = "/getTopNNStocks")
+    public List<StockFundamentals> getTopNNStocks(@RequestParam(value = "number") Integer number){
+        return financeAnalylticService.getTopNNStocks(number);
+    }
+    @GetMapping(value = "/getTopNNNNStocks/{num}")
+    public List<StockFundamentals> getTopNNNNStocks(@PathVariable Integer number){
+        return financeAnalylticService.getTopNNNStocks(number);
+    }
+    @PostMapping(value = "/getTopNPerformingStocks/{num}")
+    public List<StockFundamentalsWithNamesVO> getTopNPerformingStocks(@PathVariable Integer num,
+                                                           @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fromDate,
+                                                           @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate toDate){
+        return financeAnalylticService.getTopNPerformingStocks(num,fromDate,toDate);
+    }
 
+    @PostMapping(value = "/getTopNNPerformingStocks/{ticker}/{fromDate}/{toDate}")
+    public List<CumReturnResponseVO> getTopNNPerformingStocks(@PathVariable String ticker,
+                                                                      @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fromDate,
+                                                                      @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate toDate){
+        return financeAnalylticService.getTopNNPerformingStocks(ticker,fromDate,toDate);
+    }
 }

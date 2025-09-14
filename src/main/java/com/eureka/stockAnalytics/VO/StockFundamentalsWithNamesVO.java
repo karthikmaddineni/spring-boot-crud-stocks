@@ -9,14 +9,24 @@ public class StockFundamentalsWithNamesVO {
     private String subSectorName;
     private BigDecimal marketCap;
     private BigDecimal currentRatio;
+    private BigDecimal cumulativeReturn;
 
-    public StockFundamentalsWithNamesVO(String tickerSymbol, String tickerName, String sectorName, String subSectorName, BigDecimal marketCap, BigDecimal currentRatio) {
+    public BigDecimal getCumulativeReturn() {
+        return cumulativeReturn;
+    }
+
+    public void setCumulativeReturn(BigDecimal cumulativeReturn) {
+        this.cumulativeReturn = cumulativeReturn;
+    }
+
+    public StockFundamentalsWithNamesVO(String tickerSymbol, String tickerName, String sectorName, String subSectorName, BigDecimal marketCap, BigDecimal currentRatio, BigDecimal cumulativeReturn) {
         this.tickerSymbol = tickerSymbol;
         this.tickerName = tickerName;
         this.sectorName = sectorName;
         this.subSectorName = subSectorName;
         this.marketCap = marketCap;
         this.currentRatio = currentRatio;
+        this.cumulativeReturn = cumulativeReturn;
     }
 
     public StockFundamentalsWithNamesVO() {
