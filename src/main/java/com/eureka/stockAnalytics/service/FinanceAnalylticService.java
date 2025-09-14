@@ -6,6 +6,7 @@ import com.eureka.stockAnalytics.DAO.StocksPriceHistoryDAO;
 import com.eureka.stockAnalytics.DAO.SubSectorDAO;
 import com.eureka.stockAnalytics.VO.*;
 import com.eureka.stockAnalytics.entity.stocks.*;
+import com.eureka.stockAnalytics.remoteService.StocksCalculationClient;
 import com.eureka.stockAnalytics.repository.stocks.PriceHistoryRepository;
 import com.eureka.stockAnalytics.repository.stocks.SectorLookupRepository;
 import com.eureka.stockAnalytics.repository.stocks.StockFundamentalsRepository;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -29,6 +31,8 @@ public class FinanceAnalylticService {
     private SectorLookupRepository sectorLookupRepository;
     private SubSectorRepository subSectorRepository;
     private PriceHistoryRepository priceHistoryRepository;
+    private StocksCalculationClient stocksCalculationClient;
+    //private CummReturnRequestVO cummReturnRequestVO;
 
     @Autowired
     public FinanceAnalylticService(StocksPriceHistoryDAO stocksPriceHistoryDAO,
@@ -37,7 +41,9 @@ public class FinanceAnalylticService {
                                    StockFundamentalsRepository stockFundamentalsRepository,
                                    SectorLookupRepository sectorLookupRepository,
                                    SubSectorRepository subSectorRepository,
-                                   PriceHistoryRepository priceHistoryRepository){
+                                   PriceHistoryRepository priceHistoryRepository,
+                                   StocksCalculationClient stocksCalculationClient
+                                  ){
         this.stocksPriceHistoryDAO = stocksPriceHistoryDAO;
         this.sectorLookupDAO = sectorLookupDAO;
         this.subSectorDAO = subSectorDAO;
@@ -45,6 +51,8 @@ public class FinanceAnalylticService {
         this.sectorLookupRepository = sectorLookupRepository;
         this.subSectorRepository = subSectorRepository;
         this.priceHistoryRepository = priceHistoryRepository;
+        this.stocksCalculationClient = stocksCalculationClient;
+        //this.cummReturnRequestVO = cummReturnRequestVO;
     }
     public List<PriceHistoryVO> getSpecificStockPriceHistory(String tickerSymbol, LocalDate fromDate, LocalDate toDate) {
         return stocksPriceHistoryDAO.getSpecificStockPriceHistory(tickerSymbol, fromDate, toDate);
@@ -156,24 +164,82 @@ public class FinanceAnalylticService {
     public List<TopStockBySectorVO> getTopStockForEachSector() {
         return stockFundamentalsRepository.getTopStockBySector();
     }
-
-    public List<TopStockBySectorVO> getTop5StockForEachSector() {
-        List<TopStockBySectorVO> top5StockBySectorVOS = stockFundamentalsRepository.getTop5StockBySector();
-
-        Map<String,List<TopStockBySectorVO>> median = top5StockBySectorVOS.stream()
-                .collect(Collectors.groupingBy(TopStockBySectorVO::getSectorName));
-
-        List<CustomStockVO> finalOutput = new ArrayList<>();
-
-        median.forEach((sectorName,topStockList)->{
-            topStockList.stream().map(topStockBySectorVO -> {
-                CustomStockVO customStockVO = new CustomStockVO(
-                        topStockBySectorVO.getTickerName();
-                        topStockBySectorVO.getMarketCap());
-                return customStockVO;
-            }).collect(Collectors.toList());
-
-        });
-        return stockFundamentalsRepository.getTop5StockBySector();
+    public List<TopStockBySectorVO> getTopNStocks(Integer limitvalue){
+        return stockFundamentalsRepository.getTopNStocks(limitvalue);
     }
+
+    public Map<Month,List<StockPriceHistory>> getSingleStockSPHforGivenYear(String ticker,Integer year) {
+        List<StockPriceHistory> stockPriceHistoryList = priceHistoryRepository.getSingleStockSPHforGivenYear(ticker, year);
+
+        Map<Month,List<StockPriceHistory>> listByMonth =stockPriceHistoryList.stream()
+                .collect(Collectors.groupingBy(stockPriceHistory -> {
+                   return stockPriceHistory.getTradingDate().getMonth();
+                }));
+        return listByMonth;
+    }
+
+    public List<StockFundamentals> getNonNullCurrentRatioStocks() {
+        return stockFundamentalsRepository.getNonNullCurrentRatioStocks();
+    }
+
+    public List<StockFundamentals> getTopNNStocks(Integer number) {
+        return stockFundamentalsDAO.getTopNNStocks(number);
+    }
+
+    public List<StockFundamentals> getTopNNNStocks(Integer number) {
+        return stockFundamentalsDAO.getTopNNNNStocks(number);
+    }
+
+    public List<StockFundamentalsWithNamesVO> getTopNPerformingStocks(Integer num, LocalDate fromDate, LocalDate toDate) {
+        List<StockFundamentalsWithNamesVO> allStocksFundamentalsList = stockFundamentalsDAO.getAllStocksFundamentalsWithNames();
+
+        Map<String, StockFundamentalsWithNamesVO> stockFundamentalsMap = allStocksFundamentalsList.stream()
+                .collect(Collectors.toMap(StockFundamentalsWithNamesVO::getTickerSymbol,
+                stockFundamentalsWithNamesVO -> stockFundamentalsWithNamesVO));
+
+        List<String> allTickersList = allStocksFundamentalsList.stream()
+                .map(StockFundamentalsWithNamesVO::getTickerSymbol)
+                .collect(Collectors.toList());
+
+        CummReturnRequestVO cummReturnRequestVO = new CummReturnRequestVO(allTickersList);
+
+        List<CumReturnResponseVO> cummulativeReturns = stocksCalculationClient.getCummulativeReturns(fromDate,toDate,cummReturnRequestVO);
+
+        List<CumReturnResponseVO> intermediate = cummulativeReturns.stream()
+                .filter(cummReturnResponseVO -> cummReturnResponseVO.getCumulativeReturn()!=null)
+                .sorted(Comparator.comparing(CumReturnResponseVO::getCumulativeReturn).reversed())
+                .limit(num)
+                .collect(Collectors.toList());
+        List<StockFundamentalsWithNamesVO> finalOutputList = new ArrayList<>();/
+        intermediate.forEach(input -> {
+            StockFundamentalsWithNamesVO stockFundamentalsWithNamesVO = stockFundamentalsMap.get(input.getTickers());
+            stockFundamentalsWithNamesVO.setCumulativeReturn(input.getCumulativeReturn());
+            finalOutputList.add(stockFundamentalsWithNamesVO);
+        });
+        return finalOutputList;
+    }
+
+    public List<CumReturnResponseVO> getTopNNPerformingStocks(String ticker, LocalDate fromDate, LocalDate toDate) {
+        return stocksCalculationClient.getDailyReturns(ticker,fromDate,toDate);
+    }
+
+//    public List<TopStockBySectorVO> getTop5StockForEachSector() {
+//        List<TopStockBySectorVO> top5StockBySectorVOS = stockFundamentalsRepository.getTop5StockBySector();
+//
+//        Map<String,List<TopStockBySectorVO>> median = top5StockBySectorVOS.stream()
+//                .collect(Collectors.groupingBy(TopStockBySectorVO::getSectorName));
+//
+//        List<CustomStockVO> finalOutput = new ArrayList<>();
+//
+//        median.forEach((sectorName,topStockList)->{
+//            topStockList.stream().map(topStockBySectorVO -> {
+////                CustomStockVO customStockVO = new CustomStockVO(
+////                        topStockBySectorVO.getTickerName();
+////                        topStockBySectorVO.getMarketCap());
+////                return customStockVO;
+////            }).collect(Collectors.toList());
+//
+//        });
+//        return stockFundamentalsRepository.getTop5StockBySector();
+//    }
 }
