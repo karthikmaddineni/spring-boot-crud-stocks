@@ -17,7 +17,7 @@ public class StockFundamentalsWithNamesVO {
     private BigDecimal marketCap;
     @Schema(name = "current ratio",description = "give stocks current ratio", example = "3.45")
     private BigDecimal currentRatio;
-    @Schema(name = "cumulative retrun",description = "give stocks cumulative return", example = "2.3")
+    @Schema(name = "cumulative return",description = "give stocks cumulative return", example = "2.3")
     private BigDecimal cumulativeReturn;
 
     public StockFundamentalsWithNamesVO(String tickerSymbol, String tickerName, BigDecimal marketCap, BigDecimal cumulativeReturn) {

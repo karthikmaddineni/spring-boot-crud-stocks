@@ -6,38 +6,20 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class CumReturnResponseVO {
-    private String tickers;
+    private String tickerSymbol;
     private BigDecimal cumulativeReturn;
-    @JsonProperty("fromDate")
-    private LocalDate from;
-    @JsonProperty("toDate")
-    private LocalDate to;
 
-    public CumReturnResponseVO(String aapl, BigDecimal cumulativeReturn) {
+    public CumReturnResponseVO(String tickerSymbol, BigDecimal cumulativeReturn) {
+        this.tickerSymbol = tickerSymbol;
+        this.cumulativeReturn = cumulativeReturn;
     }
 
-    public LocalDate getFromDate() {
-        return from;
+    public String getTickerSymbol() {
+        return tickerSymbol;
     }
 
-    public void setFromDate(LocalDate fromDate) {
-        this.from = fromDate;
-    }
-
-    public LocalDate getToDate() {
-        return to;
-    }
-
-    public void setToDate(LocalDate toDate) {
-        this.to = toDate;
-    }
-
-    public String getTickers() {
-        return tickers;
-    }
-
-    public void setTickers(String tickers) {
-        this.tickers = tickers;
+    public void setTickerSymbol(String tickerSymbol) {
+        this.tickerSymbol = tickerSymbol;
     }
 
     public BigDecimal getCumulativeReturn() {
@@ -46,12 +28,5 @@ public class CumReturnResponseVO {
 
     public void setCumulativeReturn(BigDecimal cumulativeReturn) {
         this.cumulativeReturn = cumulativeReturn;
-    }
-
-    public CumReturnResponseVO(String tickers, BigDecimal cumulativeReturn, LocalDate fromDate, LocalDate toDate) {
-        this.tickers = tickers;
-        this.cumulativeReturn = cumulativeReturn;
-        this.from = fromDate;
-        this.to = toDate;
     }
 }

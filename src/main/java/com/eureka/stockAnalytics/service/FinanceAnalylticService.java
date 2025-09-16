@@ -6,7 +6,6 @@ import com.eureka.stockAnalytics.DAO.StocksPriceHistoryDAO;
 import com.eureka.stockAnalytics.DAO.SubSectorDAO;
 import com.eureka.stockAnalytics.VO.*;
 import com.eureka.stockAnalytics.entity.stocks.*;
-import com.eureka.stockAnalytics.exception.StockException;
 import com.eureka.stockAnalytics.remoteService.StocksCalculationClient;
 import com.eureka.stockAnalytics.repository.stocks.PriceHistoryRepository;
 import com.eureka.stockAnalytics.repository.stocks.SectorLookupRepository;
@@ -207,22 +206,7 @@ public class FinanceAnalylticService {
         CummReturnRequestVO cummReturnRequestVO = new CummReturnRequestVO(allTickersList);
 
         List<CumReturnResponseVO> cummulativeReturns = stocksCalculationClient.getCummulativeReturns(fromDate,toDate,cummReturnRequestVO);
-////map of ticker and its cummulativereturn
-//        Map<String, BigDecimal> cummulateReturnMap = cummulativeReturns.stream().collect(Collectors.toMap(CumReturnResponseVO::getTickers, CumReturnResponseVO::getCumulativeReturn));
-////list of allstockfund with cummulateReturn
-//        allStocksFundamentalsList.forEach(stock->{
-//            stock.setCumulativeReturn(cummulateReturnMap.get(stock.getTickerSymbol()));
-//        });
-//        //
-//        Map<String, List<StockFundamentalsWithNamesVO>> groupedByMapwithCRandSubName = allStocksFundamentalsList.stream().collect(Collectors.groupingBy(StockFundamentalsWithNamesVO::getSubSectorName));
-//
-//        groupedByMapwithCRandSubName.forEach((a,b)->{
-//            b.stream().collect(Collectors.groupingBy(StockFundamentalsWithNamesVO::getCumulativeReturn));
-//        });
 
-//        if(cummulativeReturns.isEmpty()){
-//            throw new StockException("The internal server error");
-//        }
         List<CumReturnResponseVO> intermediate = cummulativeReturns.stream()
                 .filter(cummReturnResponseVO -> cummReturnResponseVO.getCumulativeReturn()!=null)
                 .sorted(Comparator.comparing(CumReturnResponseVO::getCumulativeReturn).reversed())
@@ -231,7 +215,7 @@ public class FinanceAnalylticService {
 
         List<StockFundamentalsWithNamesVO> finalOutputList = new ArrayList<>();
         intermediate.forEach(input -> {
-            StockFundamentalsWithNamesVO stockFundamentalsWithNamesVO = stockFundamentalsMap.get(input.getTickers());
+            StockFundamentalsWithNamesVO stockFundamentalsWithNamesVO = stockFundamentalsMap.get(input.getTickerSymbol());
             stockFundamentalsWithNamesVO.setCumulativeReturn(input.getCumulativeReturn());
             finalOutputList.add(stockFundamentalsWithNamesVO);
         });
@@ -241,28 +225,4 @@ public class FinanceAnalylticService {
     public List<CumReturnResponseVO> getTopNNPerformingStocks(String ticker, LocalDate fromDate, LocalDate toDate) {
         return stocksCalculationClient.getDailyReturns(ticker,fromDate,toDate);
     }
-
-//    public List<StockFundamentals> getTopNPerformingFromEachSubSector() {
-//        return
-//    }
-
-//    public List<TopStockBySectorVO> getTop5StockForEachSector() {
-//        List<TopStockBySectorVO> top5StockBySectorVOS = stockFundamentalsRepository.getTop5StockBySector();
-//
-//        Map<String,List<TopStockBySectorVO>> median = top5StockBySectorVOS.stream()
-//                .collect(Collectors.groupingBy(TopStockBySectorVO::getSectorName));
-//
-//        List<CustomStockVO> finalOutput = new ArrayList<>();
-//
-//        median.forEach((sectorName,topStockList)->{
-//            topStockList.stream().map(topStockBySectorVO -> {
-////                CustomStockVO customStockVO = new CustomStockVO(
-////                        topStockBySectorVO.getTickerName();
-////                        topStockBySectorVO.getMarketCap());
-////                return customStockVO;
-////            }).collect(Collectors.toList());
-//
-//        });
-//        return stockFundamentalsRepository.getTop5StockBySector();
-//    }
 }

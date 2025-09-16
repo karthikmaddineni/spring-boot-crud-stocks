@@ -9,6 +9,9 @@ public class CummReturnRequestVO {
         this.tickers = tickers;
     }
 
+    public CummReturnRequestVO() {
+    }
+
     public List<String> getTickers() {
         return tickers;
     }

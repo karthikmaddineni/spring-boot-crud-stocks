@@ -15,11 +15,12 @@ import org.springframework.data.relational.core.sql.In;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
-@Repository
+@Component
 public class StockFundamentalsDAO {
 
     @Autowired
@@ -51,7 +52,7 @@ public class StockFundamentalsDAO {
                    sf.market_cap,
                    sf.current_ratio
                       from
-                        endeavour.stocks_fundamentals sf,
+                        endeavour.stock_fundamentals sf,
                         endeavour.sector_lookup sl,
                         endeavour.subsector_lookup ssl,
                         endeavour.stocks_lookup stl
