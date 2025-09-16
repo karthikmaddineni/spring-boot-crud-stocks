@@ -5,7 +5,12 @@ import com.eureka.stockAnalytics.entity.stocks.Sector;
 import com.eureka.stockAnalytics.entity.stocks.StockFundamentals;
 import com.eureka.stockAnalytics.entity.stocks.StockPriceHistory;
 import com.eureka.stockAnalytics.entity.stocks.SubSector;
+import com.eureka.stockAnalytics.exception.StockException;
 import com.eureka.stockAnalytics.service.FinanceAnalylticService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +29,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/financeAnalytics")
+@Tag(name="Stocks Return API", description = "this is an finance API, you find all the technical details below")
 public class FinanceController {
     private final static Logger logger= LoggerFactory.getLogger(FinanceController.class);
 
@@ -159,10 +165,14 @@ public class FinanceController {
     public List<StockFundamentals> getTopNNNNStocks(@PathVariable Integer number){
         return financeAnalylticService.getTopNNNStocks(number);
     }
-    @PostMapping(value = "/getTopNPerformingStocks/{num}")
+    @GetMapping(value = "/getTopNPerformingStocks/{num}")
+    @Operation(method = "Get Top performing Stocks", description = "This EndPoint will identify top performing stocks")
+    @ApiResponse(responseCode = "200",description = "Successful Cal to Fetch top N stocks")
+    @ApiResponse(responseCode = "400",description = "Invalid input or the request")
     public List<StockFundamentalsWithNamesVO> getTopNPerformingStocks(@PathVariable Integer num,
-                                                           @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fromDate,
-                                                           @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate toDate){
+                                                           @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") @Schema(name = "From Date", description = "The start time of your interest",example = "2024-12-05") LocalDate fromDate,
+                                                           @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") @Schema(name = "To Date", description = "The end time of your interest",example = "2025-12-05") LocalDate toDate){
+        if(fromDate.isAfter(toDate)) throw new IllegalArgumentException("FromDate should be before the toDate");
         return financeAnalylticService.getTopNPerformingStocks(num,fromDate,toDate);
     }
 
@@ -172,4 +182,12 @@ public class FinanceController {
                                                                       @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate toDate){
         return financeAnalylticService.getTopNNPerformingStocks(ticker,fromDate,toDate);
     }
+//    @ExceptionHandler({StockException.class})
+//    public ResponseEntity<String> exceptionHandler2(Exception e){
+//        return ResponseEntity.internalServerError().body(e.getMessage());
+//    }
+//    @GetMapping(value = "/getTopNPerformingFromEachSubSector")
+//    public List<StockFundamentals> getTopNPerformingFromEachSubSector(){
+//        return financeAnalylticService.getTopNPerformingFromEachSubSector();
+//    }
 }

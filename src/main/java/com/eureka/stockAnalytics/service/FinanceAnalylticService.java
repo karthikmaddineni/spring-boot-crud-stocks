@@ -6,6 +6,7 @@ import com.eureka.stockAnalytics.DAO.StocksPriceHistoryDAO;
 import com.eureka.stockAnalytics.DAO.SubSectorDAO;
 import com.eureka.stockAnalytics.VO.*;
 import com.eureka.stockAnalytics.entity.stocks.*;
+import com.eureka.stockAnalytics.exception.StockException;
 import com.eureka.stockAnalytics.remoteService.StocksCalculationClient;
 import com.eureka.stockAnalytics.repository.stocks.PriceHistoryRepository;
 import com.eureka.stockAnalytics.repository.stocks.SectorLookupRepository;
@@ -38,12 +39,14 @@ public class FinanceAnalylticService {
     public FinanceAnalylticService(StocksPriceHistoryDAO stocksPriceHistoryDAO,
                                    SectorLookupDAO sectorLookupDAO,
                                    SubSectorDAO subSectorDAO,
+                                   StockFundamentalsDAO stockFundamentalsDAO,
                                    StockFundamentalsRepository stockFundamentalsRepository,
                                    SectorLookupRepository sectorLookupRepository,
                                    SubSectorRepository subSectorRepository,
                                    PriceHistoryRepository priceHistoryRepository,
                                    StocksCalculationClient stocksCalculationClient
                                   ){
+        this.stockFundamentalsDAO = stockFundamentalsDAO;
         this.stocksPriceHistoryDAO = stocksPriceHistoryDAO;
         this.sectorLookupDAO = sectorLookupDAO;
         this.subSectorDAO = subSectorDAO;
@@ -204,13 +207,29 @@ public class FinanceAnalylticService {
         CummReturnRequestVO cummReturnRequestVO = new CummReturnRequestVO(allTickersList);
 
         List<CumReturnResponseVO> cummulativeReturns = stocksCalculationClient.getCummulativeReturns(fromDate,toDate,cummReturnRequestVO);
+////map of ticker and its cummulativereturn
+//        Map<String, BigDecimal> cummulateReturnMap = cummulativeReturns.stream().collect(Collectors.toMap(CumReturnResponseVO::getTickers, CumReturnResponseVO::getCumulativeReturn));
+////list of allstockfund with cummulateReturn
+//        allStocksFundamentalsList.forEach(stock->{
+//            stock.setCumulativeReturn(cummulateReturnMap.get(stock.getTickerSymbol()));
+//        });
+//        //
+//        Map<String, List<StockFundamentalsWithNamesVO>> groupedByMapwithCRandSubName = allStocksFundamentalsList.stream().collect(Collectors.groupingBy(StockFundamentalsWithNamesVO::getSubSectorName));
+//
+//        groupedByMapwithCRandSubName.forEach((a,b)->{
+//            b.stream().collect(Collectors.groupingBy(StockFundamentalsWithNamesVO::getCumulativeReturn));
+//        });
 
+//        if(cummulativeReturns.isEmpty()){
+//            throw new StockException("The internal server error");
+//        }
         List<CumReturnResponseVO> intermediate = cummulativeReturns.stream()
                 .filter(cummReturnResponseVO -> cummReturnResponseVO.getCumulativeReturn()!=null)
                 .sorted(Comparator.comparing(CumReturnResponseVO::getCumulativeReturn).reversed())
                 .limit(num)
                 .collect(Collectors.toList());
-        List<StockFundamentalsWithNamesVO> finalOutputList = new ArrayList<>();/
+
+        List<StockFundamentalsWithNamesVO> finalOutputList = new ArrayList<>();
         intermediate.forEach(input -> {
             StockFundamentalsWithNamesVO stockFundamentalsWithNamesVO = stockFundamentalsMap.get(input.getTickers());
             stockFundamentalsWithNamesVO.setCumulativeReturn(input.getCumulativeReturn());
@@ -222,6 +241,10 @@ public class FinanceAnalylticService {
     public List<CumReturnResponseVO> getTopNNPerformingStocks(String ticker, LocalDate fromDate, LocalDate toDate) {
         return stocksCalculationClient.getDailyReturns(ticker,fromDate,toDate);
     }
+
+//    public List<StockFundamentals> getTopNPerformingFromEachSubSector() {
+//        return
+//    }
 
 //    public List<TopStockBySectorVO> getTop5StockForEachSector() {
 //        List<TopStockBySectorVO> top5StockBySectorVOS = stockFundamentalsRepository.getTop5StockBySector();
