@@ -26,6 +26,7 @@ import java.time.Month;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping(value = "/financeAnalytics")
@@ -175,6 +176,14 @@ public class FinanceController {
         if(fromDate.isAfter(toDate)) throw new IllegalArgumentException("FromDate should be before the toDate");
         return financeAnalylticService.getTopNPerformingStocks(num,fromDate,toDate);
     }
+    //take input from and to year dates, and get the each years top 10 performing tasks by their cummulative returns
+    @GetMapping(value = "/getTop10PerformingStocksByCR")
+    public Map<Integer,Stream<CumReturnResponseVO>> getTop10PerformingStocksByCR(@RequestParam  Integer fromDate,
+                                                                    @RequestParam  Integer toDate) {
+
+        return financeAnalylticService.getTop10PerformingStocksByCR(fromDate,toDate);
+
+    }
 
     @PostMapping(value = "/getTopNNPerformingStocks/{ticker}/{fromDate}/{toDate}")
     public List<CumReturnResponseVO> getTopNNPerformingStocks(@PathVariable String ticker,
@@ -182,6 +191,13 @@ public class FinanceController {
                                                                       @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate toDate){
         return financeAnalylticService.getTopNNPerformingStocks(ticker,fromDate,toDate);
     }
+
+
+
+
+
+
+
 //    @ExceptionHandler({StockException.class})
 //    public ResponseEntity<String> exceptionHandler2(Exception e){
 //        return ResponseEntity.internalServerError().body(e.getMessage());

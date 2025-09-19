@@ -19,6 +19,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 //here we get the data from DAO layer and we will perform business logic
 @Service
@@ -191,13 +192,36 @@ public class FinanceAnalylticService {
     public List<StockFundamentals> getTopNNNStocks(Integer number) {
         return stockFundamentalsDAO.getTopNNNNStocks(number);
     }
+    public Map<Integer,Stream<CumReturnResponseVO>> getTop10PerformingStocksByCR(Integer fromDate, Integer toDate) {
+        int dif = toDate - fromDate;
+
+        List<StockFundamentalsWithNamesVO> allStocksFundamentalsList = stockFundamentalsDAO.getAllStocksFundamentalsWithNames();
+
+        List<String> allTickersList = allStocksFundamentalsList.stream()
+                .map(StockFundamentalsWithNamesVO::getTickerSymbol)
+                .collect(Collectors.toList());
+
+        CummReturnRequestVO cummReturnRequestVO = new CummReturnRequestVO(allTickersList);
+        Map<Integer,Stream<CumReturnResponseVO>> finalOutput = new HashMap<>();
+        if(fromDate > toDate) throw new IllegalArgumentException("FromDate should be before the toDate");
+
+        for(int i=fromDate;i<=toDate;i++){
+            LocalDate localDate = LocalDate.of(i, 01, 01);
+            LocalDate localDate1 = LocalDate.of(i+1, 01, 01);
+             List<CumReturnResponseVO> cummulativeReturns = stocksCalculationClient.getCummulativeReturns(localDate,localDate1,cummReturnRequestVO);
+            Stream<CumReturnResponseVO> limit = cummulativeReturns.stream().sorted(Comparator.comparing(CumReturnResponseVO::getCumulativeReturn).reversed()).limit(10);
+
+            finalOutput.put(i,limit);
+        }
+        return finalOutput;
+    }
 
     public List<StockFundamentalsWithNamesVO> getTopNPerformingStocks(Integer num, LocalDate fromDate, LocalDate toDate) {
         List<StockFundamentalsWithNamesVO> allStocksFundamentalsList = stockFundamentalsDAO.getAllStocksFundamentalsWithNames();
 
-        Map<String, StockFundamentalsWithNamesVO> stockFundamentalsMap = allStocksFundamentalsList.stream()
+        Map<String, BigDecimal> stockFundamentalsMap = allStocksFundamentalsList.stream()
                 .collect(Collectors.toMap(StockFundamentalsWithNamesVO::getTickerSymbol,
-                stockFundamentalsWithNamesVO -> stockFundamentalsWithNamesVO));
+                StockFundamentalsWithNamesVO::getCumulativeReturn));
 
         List<String> allTickersList = allStocksFundamentalsList.stream()
                 .map(StockFundamentalsWithNamesVO::getTickerSymbol)
@@ -214,15 +238,17 @@ public class FinanceAnalylticService {
                 .collect(Collectors.toList());
 
         List<StockFundamentalsWithNamesVO> finalOutputList = new ArrayList<>();
-        intermediate.forEach(input -> {
-            StockFundamentalsWithNamesVO stockFundamentalsWithNamesVO = stockFundamentalsMap.get(input.getTickerSymbol());
-            stockFundamentalsWithNamesVO.setCumulativeReturn(input.getCumulativeReturn());
-            finalOutputList.add(stockFundamentalsWithNamesVO);
-        });
+//        intermediate.forEach(input -> {
+//            BigDecimal stockFundamentalsWithNamesVO = stockFundamentalsMap.get(input.getTickerSymbol());
+//            stockFundamentalsWithNamesVO.getCumulativeReturn(input.getCumulativeReturn());
+//            finalOutputList.add(stockFundamentalsWithNamesVO);
+//        });
         return finalOutputList;
     }
 
     public List<CumReturnResponseVO> getTopNNPerformingStocks(String ticker, LocalDate fromDate, LocalDate toDate) {
         return stocksCalculationClient.getDailyReturns(ticker,fromDate,toDate);
     }
+
+
 }
