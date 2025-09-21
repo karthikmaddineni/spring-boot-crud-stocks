@@ -219,9 +219,9 @@ public class FinanceAnalylticService {
     public List<StockFundamentalsWithNamesVO> getTopNPerformingStocks(Integer num, LocalDate fromDate, LocalDate toDate) {
         List<StockFundamentalsWithNamesVO> allStocksFundamentalsList = stockFundamentalsDAO.getAllStocksFundamentalsWithNames();
 
-        Map<String, BigDecimal> stockFundamentalsMap = allStocksFundamentalsList.stream()
+        Map<String, StockFundamentalsWithNamesVO> allStocksFundamentalsMap = allStocksFundamentalsList.stream()
                 .collect(Collectors.toMap(StockFundamentalsWithNamesVO::getTickerSymbol,
-                StockFundamentalsWithNamesVO::getCumulativeReturn));
+                        stockFundamentalsWithNamesVO -> stockFundamentalsWithNamesVO));
 
         List<String> allTickersList = allStocksFundamentalsList.stream()
                 .map(StockFundamentalsWithNamesVO::getTickerSymbol)
@@ -238,11 +238,11 @@ public class FinanceAnalylticService {
                 .collect(Collectors.toList());
 
         List<StockFundamentalsWithNamesVO> finalOutputList = new ArrayList<>();
-//        intermediate.forEach(input -> {
-//            BigDecimal stockFundamentalsWithNamesVO = stockFundamentalsMap.get(input.getTickerSymbol());
-//            stockFundamentalsWithNamesVO.getCumulativeReturn(input.getCumulativeReturn());
-//            finalOutputList.add(stockFundamentalsWithNamesVO);
-//        });
+        intermediate.forEach(input -> {
+            StockFundamentalsWithNamesVO stockFundamentalsWithNamesVO = allStocksFundamentalsMap.get(input.getTickerSymbol());
+            stockFundamentalsWithNamesVO.setCumulativeReturn(input.getCumulativeReturn());
+            finalOutputList.add(stockFundamentalsWithNamesVO);
+        });
         return finalOutputList;
     }
 
@@ -251,4 +251,27 @@ public class FinanceAnalylticService {
     }
 
 
+    public Map<String,CumReturnResponseVO> getBestStockIntermsofCR(Integer year) {
+
+        LocalDate fromDate = LocalDate.of(year,1,1);
+        LocalDate toDate = LocalDate.of(year,12,31);
+
+        List<StockFundamentalsWithNamesVO> topStocks1 = getTopNPerformingStocks(1, fromDate, toDate);
+        String ticker = topStocks1.get(0).getTickerSymbol();
+        Map<String,CumReturnResponseVO> finalOutput = new HashMap<>();
+//
+//        List<CumReturnResponseVO> top5best = topStocks1.stream().sorted(Comparator.comparing(CumReturnResponseVO::getCumulativeReturn).reversed())
+//                .limit(5)
+//                .collect(Collectors.toList());
+//
+//        List<CumReturnResponseVO> top5worst= topStocks1.stream().sorted(Comparator.comparing(CumReturnResponseVO::getCumulativeReturn))
+//                .limit(5)
+//                .collect(Collectors.toList());
+//
+//        finalOutput.put("top 5 best", top5best);
+//        finalOutput.put("top5 worst",top5worst);
+
+
+        return finalOutput;
+    }
 }

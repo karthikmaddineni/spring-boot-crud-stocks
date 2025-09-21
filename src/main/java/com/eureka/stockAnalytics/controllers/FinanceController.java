@@ -191,6 +191,12 @@ public class FinanceController {
                                                                       @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate toDate){
         return financeAnalylticService.getTopNNPerformingStocks(ticker,fromDate,toDate);
     }
+    //take year as the input and get best stock in terms of CumulativeReturn and also get the best 5 and worst 5 days of that stock
+    @GetMapping(value = "/getBestStockIntermsofCR")
+    public Map<String,CumReturnResponseVO>getBestStockIntermsofCR(@RequestParam(value = "year") Integer year){
+        return financeAnalylticService.getBestStockIntermsofCR(year);
+    }
+
 
 
 
